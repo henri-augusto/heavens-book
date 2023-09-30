@@ -32,7 +32,7 @@ exports.signUp = async (req, res) => {
       from: "Heaven's Book Team, <heavensbook@mail.com>",
       to: newUser.email,
       subject: "Here's a gift for you!",
-      text: 'testing',
+      text: 'See in your attachments a new Ebook of our team, Cook Like A Chef! Its Wonderfull',
       attachments: [
         // {
         //   filename: 'cozinhe-como-chefe-compressed.pdf',
@@ -42,7 +42,6 @@ exports.signUp = async (req, res) => {
         //   ),
         //   contentType: 'application/pdf',
         // },
-
         {
           filename: 'cozinhe-como-chefe-compressed.pdf',
           content: data,
@@ -51,7 +50,7 @@ exports.signUp = async (req, res) => {
       ],
     };
 
-    transporter.sendMail(mailOptions, (err, info) => {
+    await transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
         console.log(err);
       } else {
@@ -65,27 +64,7 @@ exports.signUp = async (req, res) => {
       newUser,
     });
   } catch (error) {
-    console.log(error);
-
     res.status(400).json({
-      status: 'fail',
-      error,
-    });
-  }
-};
-
-exports.getStream = async (req, res) => {
-  try {
-    const data = await readFilePro(
-      './public/cozinhe-como-chefe-compressed.pdf'
-    );
-
-    res.status(200).json({
-      status: 'success',
-      data,
-    });
-  } catch (error) {
-    res.status(500).json({
       status: 'fail',
       error,
     });
